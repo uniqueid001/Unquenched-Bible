@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getBoolPref
@@ -39,14 +39,14 @@ class ManualListSet: Fragment() {
             listSpinner1.background = ResourcesCompat.getDrawable(resources, R.drawable.spinners_dark, (activity as MainActivity).theme)
             listSpinner1.setPopupBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.spinners_dark, (activity as MainActivity).theme))
             listSpinner2.background = ResourcesCompat.getDrawable(resources, R.drawable.spinners_dark, (activity as MainActivity).theme)
-            button.setTextColor(getColor(App.applicationContext(), R.color.unquenchedTextDark))
+            button.setTextColor(getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
         }else{
             listSelector.background = ResourcesCompat.getDrawable(resources, R.drawable.spinners, (activity as MainActivity).theme)
             listSelector.setPopupBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.spinners, (activity as MainActivity).theme))
             listSpinner1.background = ResourcesCompat.getDrawable(resources, R.drawable.spinners, (activity as MainActivity).theme)
             listSpinner1.setPopupBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.spinners, (activity as MainActivity).theme))
             listSpinner2.background = ResourcesCompat.getDrawable(resources, R.drawable.spinners, (activity as MainActivity).theme)
-            button.setTextColor(getColor(App.applicationContext(), R.color.unquenchedText))
+            button.setTextColor(getColor(MainApp.applicationContext(), R.color.unquenchedText))
         }
         val listNames = ArrayList<String>()
         val planSystem = getStringPref(name="planSystem", defaultValue="pgh")
@@ -123,9 +123,9 @@ class ManualListSet: Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val buttonColor: Int = if(dark){
-                    getColor(App.applicationContext(), R.color.buttonBackgroundDark)
+                    getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark)
                 }else{
-                    getColor(App.applicationContext(), R.color.buttonBackground)
+                    getColor(MainApp.applicationContext(), R.color.buttonBackground)
                 }
 
                 val selectedItem      = parent?.getItemAtPosition(position).toString()

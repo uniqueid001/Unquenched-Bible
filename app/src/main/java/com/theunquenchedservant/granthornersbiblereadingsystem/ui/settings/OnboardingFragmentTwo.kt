@@ -16,7 +16,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getBoolPref
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.setBoolPref
@@ -81,7 +81,7 @@ class OnboardingFragmentTwo : Fragment() {
             try {
                 startActivity(i)
             }catch(e: ActivityNotFoundException){
-                Toast.makeText(App.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
+                Toast.makeText(MainApp.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
             }
         }
         nextBtn.setOnClickListener {

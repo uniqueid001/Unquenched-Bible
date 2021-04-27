@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref
@@ -38,12 +38,12 @@ class ManualListNumericalSet: Fragment() {
             dayPicker.background = ResourcesCompat.getDrawable(resources, R.drawable.spinners_dark, (activity as MainActivity).theme)
             selectButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#383838"))
             selectButton.backgroundTintMode = PorterDuff.Mode.ADD
-            selectButton.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedTextDark))
+            selectButton.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
         }else{
             dayPicker.background = ResourcesCompat.getDrawable(resources, R.drawable.spinners, (activity as MainActivity).theme)
             selectButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#e1e2e6"))
             selectButton.backgroundTintMode = PorterDuff.Mode.ADD
-            selectButton.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedText))
+            selectButton.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedText))
         }
         dayPicker.minValue = 1
         dayPicker.maxValue = 9999

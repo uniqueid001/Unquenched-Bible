@@ -18,7 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.firestoreToPreference
@@ -113,7 +113,7 @@ class MainSettings : PreferenceFragmentCompat() {
             try {
                 startActivity(i)
             }catch(e: ActivityNotFoundException){
-                Toast.makeText(App.applicationContext(), "No browser or Discord installed", Toast.LENGTH_LONG).show()
+                Toast.makeText(MainApp.applicationContext(), "No browser or Discord installed", Toast.LENGTH_LONG).show()
             }
             false
         }
@@ -124,7 +124,7 @@ class MainSettings : PreferenceFragmentCompat() {
         if(requestCode == _rcSignIn){
             if(resultCode == Activity.RESULT_OK){
                 val user = FirebaseAuth.getInstance().currentUser
-                Toast.makeText(App.applicationContext(), "Signed In!", Toast.LENGTH_LONG).show()
+                Toast.makeText(MainApp.applicationContext(), "Signed In!", Toast.LENGTH_LONG).show()
                 val db = FirebaseFirestore.getInstance()
                 db.collection("main").document(user!!.uid).get()
                         .addOnSuccessListener { doc ->
@@ -196,7 +196,7 @@ class MainSettings : PreferenceFragmentCompat() {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-                Toast.makeText(App.applicationContext(), "Signed In!", Toast.LENGTH_LONG).show()
+                Toast.makeText(MainApp.applicationContext(), "Signed In!", Toast.LENGTH_LONG).show()
                 val db = FirebaseFirestore.getInstance()
                 val user = FirebaseAuth.getInstance().currentUser
                 db.collection("main").document(user!!.uid).get()
@@ -219,7 +219,7 @@ class MainSettings : PreferenceFragmentCompat() {
                             }
                         }
             } else {
-                Toast.makeText(App.applicationContext(), "Google Sign In Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(MainApp.applicationContext(), "Google Sign In Failed", Toast.LENGTH_LONG).show()
             }
         }
     }

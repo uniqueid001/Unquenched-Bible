@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.wifi.hotspot2.pps.Credential
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -27,10 +28,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.ALL_BOOKS
-import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.BOOK_CHAPTERS
-import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.NT_BOOKS
-import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.OT_BOOKS
+import com.theunquenchedservant.granthornersbiblereadingsystem.data.Settings
 import com.theunquenchedservant.granthornersbiblereadingsystem.databinding.ActivityMainBinding
 import com.theunquenchedservant.granthornersbiblereadingsystem.ui.settings.OnboardingPagerActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.Dates.checkDate
@@ -44,6 +42,12 @@ import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedP
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.extractStringPref
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getStringPref
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.setStringPref
+import io.realm.Realm
+import io.realm.mongodb.App
+import io.realm.mongodb.AppConfiguration
+import io.realm.mongodb.Credentials
+import io.realm.mongodb.User
+import io.realm.mongodb.sync.SyncConfiguration
 
 class MainActivity : AppCompatActivity(),  BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -61,6 +65,7 @@ class MainActivity : AppCompatActivity(),  BottomNavigationView.OnNavigationItem
         setTheme(R.style.AppTheme)
         WebView(applicationContext)
         super.onCreate(savedInstanceState)
+
 
         val stateList = arrayOf(
             intArrayOf(android.R.attr.state_checked),
@@ -86,7 +91,31 @@ class MainActivity : AppCompatActivity(),  BottomNavigationView.OnNavigationItem
                             .build(), _rcSignIn)
         }else if(!getBoolPref(name="hasCompletedOnboarding", defaultValue=false)){
             startActivity(Intent(this, OnboardingPagerActivity::class.java))
-        }else {
+        }else if(Firebase.auth.currentUser != null){
+            Realm.init(this)
+            val appID : String = "unquenched-bible-rtecx"
+
+            val app = App(AppConfiguration.Builder(appID)
+                    .build())
+            val credentials: Credentials = Credentials.anonymous()
+
+            app.loginAsync(credentials){
+                if(it.isSuccess){
+                    log("Successfully logged in anonymously")
+                    val user: User? = app.currentUser()
+                    val partitionValue: String = Firebase.auth.currentUser?.uid!!
+                    val config = SyncConfiguration.Builder(user, partitionValue)
+                            .allowQueriesOnUiThread(true)
+                            .allowWritesOnUiThread(true)
+                            .build()
+                    val backgroundThreadRealm: Realm = Realm.getInstance(config)
+
+                    val settings = Settings(Firebase.auth.currentUser?.uid!!, false, false, true, true, 240, 1200, false, 90, false, "horner", "esv", "pgh", true)
+                    backgroundThreadRealm.executeTransaction { transactionRealm ->
+                        transactionRealm.insert(settings)
+                    }
+                }
+            }
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
             navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -108,14 +137,14 @@ class MainActivity : AppCompatActivity(),  BottomNavigationView.OnNavigationItem
 
             if (darkMode) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                toolbarColor = ContextCompat.getColor(App.applicationContext(), R.color.buttonBackgroundDark)
+                toolbarColor = ContextCompat.getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark)
                 colorList = intArrayOf(
                         ContextCompat.getColor(this, R.color.unquenchedEmphDark),
                         ContextCompat.getColor(this, R.color.unquenchedTextDark)
                 )
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                toolbarColor = ContextCompat.getColor(App.applicationContext(), R.color.buttonBackground)
+                toolbarColor = ContextCompat.getColor(MainApp.applicationContext(), R.color.buttonBackground)
                 colorList = intArrayOf(
                         ContextCompat.getColor(this, R.color.unquenchedOrange),
                         ContextCompat.getColor(this, R.color.unquenchedText)
@@ -407,7 +436,7 @@ class MainActivity : AppCompatActivity(),  BottomNavigationView.OnNavigationItem
             when {
                 Firebase.auth.currentUser == null -> {
                     finish()
-                    val i = Intent(App.applicationContext(), MainActivity::class.java)
+                    val i = Intent(MainApp.applicationContext(), MainActivity::class.java)
                     startActivity(i)
                 }
                 navController.currentDestination?.id != R.id.navigation_home -> {
@@ -429,7 +458,7 @@ class MainActivity : AppCompatActivity(),  BottomNavigationView.OnNavigationItem
             val response = IdpResponse.fromResultIntent(data)
             if(resultCode == Activity.RESULT_OK){
                 val user = Firebase.auth.currentUser
-                Toast.makeText(App.applicationContext(), "Signed In!", Toast.LENGTH_LONG).show()
+                Toast.makeText(MainApp.applicationContext(), "Signed In!", Toast.LENGTH_LONG).show()
                 val db = Firebase.firestore
                 db.collection("main").document(user!!.uid).get()
                         .addOnSuccessListener { doc ->

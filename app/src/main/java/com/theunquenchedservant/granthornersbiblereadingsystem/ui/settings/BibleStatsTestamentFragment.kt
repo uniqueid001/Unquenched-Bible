@@ -8,7 +8,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.BOOK_CHAPTERS
@@ -26,9 +26,9 @@ class BibleStatsTestamentFragment : PreferenceFragmentCompat()  {
         testament = b?.getString("testament")!!
         mainActivity.supportActionBar?.title = "${testament.capitalize(Locale.ROOT)} Testament Statistics"
         val books = getBooks(testament)!!
-        val screen = preferenceManager.createPreferenceScreen(App.applicationContext())
+        val screen = preferenceManager.createPreferenceScreen(MainApp.applicationContext())
         for (book in books){
-            val bookPref = Preference(App.applicationContext())
+            val bookPref = Preference(MainApp.applicationContext())
             bookPref.title = BOOK_NAMES[book]
             bookPref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_navigate_next_24, mainActivity.theme)
             bookPref.summary = "Loading..."

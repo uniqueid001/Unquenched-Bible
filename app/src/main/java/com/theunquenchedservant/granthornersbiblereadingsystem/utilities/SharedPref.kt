@@ -7,7 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity.Companion.log
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.Dates.checkDate
 
@@ -34,17 +34,17 @@ object SharedPref {
             db.collection("main").document(user.uid).update(name, value)
     }
     fun doesNotExist(name:String):Boolean{
-        return !PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).contains(name)
+        return !PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).contains(name)
     }
     fun setIntPref(name: String, value: Int, updateFS:Boolean=false): Int{
-        PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).edit().putInt(name, value).apply()
+        PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).edit().putInt(name, value).apply()
         if(updateFS) {
             updateFS(name, value)
         }
         return value
     }
     private fun deletePref(name:String){
-        PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).edit().remove(name).apply()
+        PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).edit().remove(name).apply()
     }
     fun increaseIntPref(name: String, value: Int, updateFS:Boolean=false): Int{
         val newValue = getIntPref(name) + value
@@ -58,11 +58,11 @@ object SharedPref {
         if(doesNotExist(name)){
             setIntPref(name, defaultValue, updateFS=true)
         }
-        return PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).getInt(name, defaultValue)
+        return PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).getInt(name, defaultValue)
     }
 
     fun setStringPref(name:String, value: String, updateFS: Boolean = false):String {
-        PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).edit().putString(name, value).apply()
+        PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).edit().putString(name, value).apply()
         if(updateFS) {
             updateFS(name, value)
         }
@@ -72,11 +72,11 @@ object SharedPref {
         if(doesNotExist(name)){
             setStringPref(name, defaultValue, updateFS=true)
         }
-        return PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).getString(name, defaultValue)!!
+        return PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).getString(name, defaultValue)!!
     }
 
     fun setBoolPref(name: String, value: Boolean, updateFS:Boolean=false):Boolean{
-        PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).edit().putBoolean(name, value).apply()
+        PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).edit().putBoolean(name, value).apply()
         if(updateFS) {
             updateFS(name, value)
         }
@@ -86,7 +86,7 @@ object SharedPref {
         if(doesNotExist(name)){
             setBoolPref(name, defaultValue, updateFS=true)
         }
-        return PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).getBoolean(name, defaultValue)
+        return PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).getBoolean(name, defaultValue)
     }
 
     private val user = Firebase.auth.currentUser
@@ -245,26 +245,26 @@ object SharedPref {
         }
     }
 
-    fun listNumbersReset() { App.applicationContext().getSharedPreferences("listNumbers", Context.MODE_PRIVATE).edit().clear().apply() }
+    fun listNumbersReset() { MainApp.applicationContext().getSharedPreferences("listNumbers", Context.MODE_PRIVATE).edit().clear().apply() }
 
     fun updatePrefNames(){
-        if (PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).contains("notif_switch")) {
+        if (PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).contains("notif_switch")) {
             setBoolPref(name="notifications", value=getBoolPref(name="notif_switch"))
             deletePref(name="notif_switch")
         }
-        if (PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).contains("vacation_mode")){
+        if (PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).contains("vacation_mode")){
             setBoolPref(name="vacationMode", value= getBoolPref(name="vacation_mode"))
             deletePref(name="vacation_mode")
         }
-        if(PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).contains("allow_partial_switch")) {
+        if(PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).contains("allow_partial_switch")) {
             setBoolPref(name = "allowPartial", value = getBoolPref(name = "allow_partial_switch"))
             deletePref(name="allow_partial_switch")
         }
-        if(PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).contains("daily_time")) {
+        if(PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).contains("daily_time")) {
             setIntPref(name = "dailyNotif", value = getIntPref(name = "daily_time"))
             deletePref(name="daily_time")
         }
-        if(PreferenceManager.getDefaultSharedPreferences(App.applicationContext()).contains("remind_time")) {
+        if(PreferenceManager.getDefaultSharedPreferences(MainApp.applicationContext()).contains("remind_time")) {
             setIntPref(name = "remindNotif", value = getIntPref(name = "remind_time"))
             deletePref(name="remind_time")
         }

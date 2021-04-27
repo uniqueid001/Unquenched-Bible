@@ -7,7 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.DailyCheck
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.RemindReceiver
@@ -16,12 +16,12 @@ import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedP
 import java.util.*
 
 object AlarmCreator {
-    private val dailyIntent = Intent(App.applicationContext(), AlarmReceiver::class.java)
-    private val remindIntent = Intent(App.applicationContext(), RemindReceiver::class.java)
-    private val checkIntent = Intent(App.applicationContext(), DailyCheck::class.java)
-    private val dailyPending = PendingIntent.getBroadcast(App.applicationContext(), 4, dailyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-    private val remindPending = PendingIntent.getBroadcast(App.applicationContext(), 2, remindIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-    private val checkPending = PendingIntent.getBroadcast(App.applicationContext(), 6, checkIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+    private val dailyIntent = Intent(MainApp.applicationContext(), AlarmReceiver::class.java)
+    private val remindIntent = Intent(MainApp.applicationContext(), RemindReceiver::class.java)
+    private val checkIntent = Intent(MainApp.applicationContext(), DailyCheck::class.java)
+    private val dailyPending = PendingIntent.getBroadcast(MainApp.applicationContext(), 4, dailyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+    private val remindPending = PendingIntent.getBroadcast(MainApp.applicationContext(), 2, remindIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+    private val checkPending = PendingIntent.getBroadcast(MainApp.applicationContext(), 6, checkIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
     fun cancelAlarm(alarmType: String) {
         val notifyPendingIntent = when(alarmType){
@@ -29,7 +29,7 @@ object AlarmCreator {
             "remind" -> remindPending
             else -> checkPending
         }
-        val ctx = App.applicationContext()
+        val ctx = MainApp.applicationContext()
         val alarmManager = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(notifyPendingIntent)
     }
@@ -37,19 +37,19 @@ object AlarmCreator {
     fun createNotificationChannel() {
         val primaryChannelId = "primary_notification_channel"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = App.applicationContext().resources.getString(R.string.notification_channel_name)
-            val description = App.applicationContext().getString(R.string.notification_channel_description)
+            val name = MainApp.applicationContext().resources.getString(R.string.notification_channel_name)
+            val description = MainApp.applicationContext().getString(R.string.notification_channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(primaryChannelId, name, importance)
             channel.description = description
             channel.enableVibration(true)
-            val notificationManager = App.applicationContext().getSystemService(NotificationManager::class.java)!!
+            val notificationManager = MainApp.applicationContext().getSystemService(NotificationManager::class.java)!!
             notificationManager.createNotificationChannel(channel)
         }
     }
 
     fun createAlarm(alarmType: String) {
-        val ctx = App.applicationContext()
+        val ctx = MainApp.applicationContext()
         val notifPendingIntent : PendingIntent
         val timeInMinutes : Int
         when(alarmType) {
@@ -93,7 +93,7 @@ object AlarmCreator {
     }
 
     fun createAlarms() {
-        val ctx = App.applicationContext()
+        val ctx = MainApp.applicationContext()
         val notifyIntent = Intent(ctx, AlarmReceiver::class.java)
 
         when ((PendingIntent.getBroadcast(ctx, 4, notifyIntent, PendingIntent.FLAG_NO_CREATE) != null)) {

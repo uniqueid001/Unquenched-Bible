@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity.Companion.log
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
@@ -60,25 +60,25 @@ class UpdateEmailFragment: Fragment() {
         }
         currentEmail.text = Firebase.auth.currentUser?.email
         if(dark){
-            currentEmailLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmphDark))
-            currentEmail.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedTextDark))
+            currentEmailLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark))
+            currentEmail.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
             newEmail.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#9cb9d3"))
             userPass.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#9cb9d3"))
-            cardHolder.setCardBackgroundColor(ContextCompat.getColor(App.applicationContext(), R.color.buttonBackgroundDark))
-            emailLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmphDark))
-            passwordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmphDark))
+            cardHolder.setCardBackgroundColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark))
+            emailLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark))
+            passwordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark))
             updateBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#383838"))
-            updateBtn.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedTextDark))
+            updateBtn.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
         }else{
-            currentEmailLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmph))
-            currentEmail.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedText))
+            currentEmailLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmph))
+            currentEmail.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedText))
             newEmail.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#121212"))
             userPass.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#121212"))
-            cardHolder.setCardBackgroundColor(ContextCompat.getColor(App.applicationContext(), R.color.buttonBackground))
-            emailLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmph))
-            passwordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmph))
+            cardHolder.setCardBackgroundColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.buttonBackground))
+            emailLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmph))
+            passwordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmph))
             updateBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#e1e2e6"))
-            updateBtn.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedText))
+            updateBtn.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedText))
         }
         updateBtn.setOnClickListener {
             val credential = EmailAuthProvider.getCredential(user!!.email.toString(), userPass.text.toString())

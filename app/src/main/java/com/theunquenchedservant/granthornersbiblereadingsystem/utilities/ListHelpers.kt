@@ -7,8 +7,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.net.Uri
-import android.os.Build
-import android.provider.Settings.Global.getString
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -21,9 +19,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.BuildConfig
-import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity.Companion.log
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.databinding.CardviewsBinding
@@ -36,7 +33,6 @@ import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedP
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getBoolPref
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getIntPref
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getStringPref
-import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.increaseIntPref
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.setIntPref
 import java.util.*
 
@@ -55,11 +51,11 @@ object ListHelpers {
                 try {
                     startActivity(context, i, null)
                 }catch(e: ActivityNotFoundException){
-                    Toast.makeText(App.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(MainApp.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
                 }
                 dialog.dismiss()
             }
-            builder.setTitle(App.applicationContext().resources.getString(R.string.title_new_update, BuildConfig.VERSION_NAME))
+            builder.setTitle(MainApp.applicationContext().resources.getString(R.string.title_new_update, BuildConfig.VERSION_NAME))
             builder.setMessage(
                     "Disabled Bible stats until we are able to fix\n"+
                             "Potentially fixed an issue with leap year calculations. Luckily there are a few years til that's an issue.\n\n"+
@@ -80,11 +76,11 @@ object ListHelpers {
                 try {
                     startActivity(context, i, null)
                 }catch(e: ActivityNotFoundException){
-                    Toast.makeText(App.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(MainApp.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
                 }
                 dialog.dismiss()
             }
-            builder.setTitle(App.applicationContext().resources.getString(R.string.title_new_update, BuildConfig.VERSION_NAME))
+            builder.setTitle(MainApp.applicationContext().resources.getString(R.string.title_new_update, BuildConfig.VERSION_NAME))
             builder.setMessage(
                     "[ADDED] M'Cheyne Bible Reading Calendar\n\n" +
                             "[ADDED] Weekend Mode. Take Saturday and Sunday off.\n\n" +
@@ -121,14 +117,14 @@ object ListHelpers {
         val backgroundColor: Int
         val emphColor:Int
         if(getBoolPref("darkMode")){
-            backgroundColor = getColor(App.applicationContext(), R.color.buttonBackgroundDark)
-            emphColor = getColor(App.applicationContext(), R.color.unquenchedEmphDark)
+            backgroundColor = getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark)
+            emphColor = getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark)
         }else{
-            backgroundColor = getColor(App.applicationContext(), R.color.buttonBackgroundDark)
-            emphColor = getColor(App.applicationContext(), R.color.unquenchedOrange)
+            backgroundColor = getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark)
+            emphColor = getColor(MainApp.applicationContext(), R.color.unquenchedOrange)
         }
         cardList.listTitle.text = listTitle
-        cardList.listReading.text = App.applicationContext().resources.getText(R.string.loading)
+        cardList.listReading.text = MainApp.applicationContext().resources.getText(R.string.loading)
         cardList.root.isClickable=false
         cardList.root.setCardBackgroundColor(backgroundColor)
         cardList.listReading.setTextColor(emphColor)
@@ -138,11 +134,11 @@ object ListHelpers {
         val allDoneBackgroundColor: String
         val backgroundColor:String
         if (getBoolPref(name = "darkMode", defaultValue = true)) {
-            allDoneBackgroundColor = App.applicationContext().resources.getString(R.string.done_btn_background_color_dark)
-            backgroundColor = App.applicationContext().resources.getString(R.string.btn_background_color_dark)
+            allDoneBackgroundColor = MainApp.applicationContext().resources.getString(R.string.done_btn_background_color_dark)
+            backgroundColor = MainApp.applicationContext().resources.getString(R.string.btn_background_color_dark)
         }else{
-            allDoneBackgroundColor = App.applicationContext().resources.getString(R.string.done_btn_background_color)
-            backgroundColor = App.applicationContext().resources.getString(R.string.btn_background_color)
+            allDoneBackgroundColor = MainApp.applicationContext().resources.getString(R.string.done_btn_background_color)
+            backgroundColor = MainApp.applicationContext().resources.getString(R.string.btn_background_color)
         }
         when (listsDone) {
             maxDone -> {
@@ -191,9 +187,9 @@ object ListHelpers {
 
     fun listSwitcher(cardList: View, listDone: Int, material_button: Button){
         val enabled = if(getBoolPref(name="darkMode", defaultValue=true)){
-            getColor(App.applicationContext(), android.R.color.background_dark)
+            getColor(MainApp.applicationContext(), android.R.color.background_dark)
         }else{
-            getColor(App.applicationContext(), android.R.color.background_light)
+            getColor(MainApp.applicationContext(), android.R.color.background_light)
         }
         val disabled = Color.parseColor("#00383838")
         cardList as CardView
@@ -324,7 +320,7 @@ object ListHelpers {
         }else{
             getIntPref(listName)
         }
-        val list = App.applicationContext().resources.getStringArray(listId)
+        val list = MainApp.applicationContext().resources.getStringArray(listId)
         return when(number){
             list.size -> {
                 setIntPref(listName, value=0, updateFS=true)

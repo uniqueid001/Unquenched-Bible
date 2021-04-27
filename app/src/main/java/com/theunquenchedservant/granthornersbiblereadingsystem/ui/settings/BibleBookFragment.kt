@@ -7,7 +7,7 @@ import androidx.preference.PreferenceScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.BOOK_CHAPTERS
 import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.BOOK_NAMES
@@ -17,7 +17,7 @@ import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedP
 class BibleBookFragment : PreferenceFragmentCompat(){
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?){
-        val screen: PreferenceScreen = preferenceManager.createPreferenceScreen(App.applicationContext())
+        val screen: PreferenceScreen = preferenceManager.createPreferenceScreen(MainApp.applicationContext())
         val b = arguments
         val book = b?.getString("book")
         val chapters = BOOK_CHAPTERS[book]
@@ -25,7 +25,7 @@ class BibleBookFragment : PreferenceFragmentCompat(){
         val mainActivity = activity as MainActivity
         mainActivity.supportActionBar?.title = "$bookName Statistics"
         for(i in 1..chapters!!){
-            val chapterPref = Preference(App.applicationContext())
+            val chapterPref = Preference(MainApp.applicationContext())
             chapterPref.title = "$bookName $i"
             Firebase.firestore.collection("main").document(Firebase.auth.currentUser!!.uid).get()
                     .addOnSuccessListener {

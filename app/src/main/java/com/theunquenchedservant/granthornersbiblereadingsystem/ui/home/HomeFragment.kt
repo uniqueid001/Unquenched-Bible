@@ -15,7 +15,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.Marker.markAll
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.Marker.markSingle
@@ -63,9 +63,9 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         darkMode = getBoolPref(name = "darkMode", defaultValue = true)
         if(darkMode){
-            binding.materialButton.setBackgroundColor(getColor(App.applicationContext(), R.color.buttonBackgroundDark))
+            binding.materialButton.setBackgroundColor(getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark))
         }else{
-            binding.materialButton.setBackgroundColor(getColor(App.applicationContext(), R.color.buttonBackground))
+            binding.materialButton.setBackgroundColor(getColor(MainApp.applicationContext(), R.color.buttonBackground))
         }
         initList(binding.cardList1, resources.getString(R.string.title_pgh_list1))
         initList(binding.cardList2, resources.getString(R.string.title_pgh_list2))
@@ -110,8 +110,8 @@ class HomeFragment : Fragment() {
         }
         viewModel.listsDone.observe(viewLifecycleOwner) { listsDone ->
             when (getBoolPref(name = "darkMode", defaultValue = true)) {
-                true -> binding.materialButton.setTextColor(getColor(App.applicationContext(), R.color.unquenchedTextDark))
-                false -> binding.materialButton.setTextColor(getColor(App.applicationContext(), R.color.unquenchedText))
+                true -> binding.materialButton.setTextColor(getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
+                false -> binding.materialButton.setTextColor(getColor(MainApp.applicationContext(), R.color.unquenchedText))
             }
             updateButton(listsDone.listsDone, binding.materialButton, 10, 9)
         }
@@ -152,12 +152,12 @@ class HomeFragment : Fragment() {
         cardListRoot.isClickable = true
         when (getBoolPref(name = "darkMode", defaultValue = true)) {
             true -> {
-                enabled = getColor(App.applicationContext(), R.color.buttonBackgroundDark)
-                lineColor = getColor(App.applicationContext(), R.color.unquenchedEmphDark)
+                enabled = getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark)
+                lineColor = getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark)
             }
             false -> {
-                enabled = getColor(App.applicationContext(), R.color.buttonBackground)
-                lineColor = getColor(App.applicationContext(), R.color.unquenchedOrange)
+                enabled = getColor(MainApp.applicationContext(), R.color.buttonBackground)
+                lineColor = getColor(MainApp.applicationContext(), R.color.unquenchedOrange)
             }
         }
         val disabled = Color.parseColor("#00383838")
@@ -223,8 +223,8 @@ class HomeFragment : Fragment() {
     private fun createCardListener(cardView: CardviewsBinding, arrayId: Int, psalms: Boolean, listDone: String, listName: String) {
         val list = resources.getStringArray(arrayId)
         val enabled: Int = when (getBoolPref("darkMode", defaultValue = true)) {
-            true -> getColor(App.applicationContext(), R.color.buttonBackgroundDark)
-            false -> getColor(App.applicationContext(), R.color.buttonBackground)
+            true -> getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark)
+            false -> getColor(MainApp.applicationContext(), R.color.buttonBackground)
         }
         if(getIntPref(listDone) == 0) {
             cardView.root.setOnClickListener { view ->

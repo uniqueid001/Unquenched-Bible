@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity.Companion.log
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getBoolPref
@@ -74,7 +74,7 @@ class ReadingListRepository {
         }
     }
     private fun getReading(index:Int, listId: Int, listName: String, psalmChecked: Boolean): String {
-        val list = App.applicationContext().resources.getStringArray(listId)
+        val list = MainApp.applicationContext().resources.getStringArray(listId)
         val planSystem = getStringPref(name="planSystem", defaultValue="pgh")
         val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         when (listName) {

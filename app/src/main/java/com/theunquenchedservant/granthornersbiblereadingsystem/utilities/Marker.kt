@@ -9,7 +9,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity.Companion.log
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.data.Books.BOOK_CHAPTERS
@@ -140,7 +140,7 @@ object Marker {
     private fun updateReadingStatistic(currentData: MutableMap<String, Any>?, listName: String, updateValue: MutableMap<String, Any>):MutableMap<String, Any> {
         var updateValues = updateValue
         val listId = getListId(listName)
-        val list = App.applicationContext().resources.getStringArray(listId)
+        val list = MainApp.applicationContext().resources.getStringArray(listId)
         val planType = extractStringPref(currentData, "planType", defaultValue="horner")
         val planSystem = extractStringPref(currentData, "planSystem", "pgh")
         val listIndex = when (planType) {

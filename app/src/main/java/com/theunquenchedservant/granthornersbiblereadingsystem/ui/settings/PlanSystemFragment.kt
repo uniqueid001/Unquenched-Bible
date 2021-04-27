@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
 import com.theunquenchedservant.granthornersbiblereadingsystem.utilities.SharedPref.getBoolPref
@@ -47,7 +47,7 @@ class PlanSystemFragment : PreferenceFragmentCompat() {
             try {
                 startActivity(i)
             }catch(e: ActivityNotFoundException){
-                Toast.makeText(App.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
+                Toast.makeText(MainApp.applicationContext(), "No browser installed", Toast.LENGTH_LONG).show()
             }
             false
         }

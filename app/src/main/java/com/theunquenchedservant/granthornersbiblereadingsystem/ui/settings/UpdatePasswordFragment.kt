@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.theunquenchedservant.granthornersbiblereadingsystem.App
+import com.theunquenchedservant.granthornersbiblereadingsystem.MainApp
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity
 import com.theunquenchedservant.granthornersbiblereadingsystem.MainActivity.Companion.log
 import com.theunquenchedservant.granthornersbiblereadingsystem.R
@@ -56,31 +56,31 @@ class UpdatePasswordFragment: Fragment() {
                 errorHolder.isVisible = false
             }
             if(dark){
-                currentPasswordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmphDark))
-                currentPassword.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedTextDark))
-                newPasswordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmphDark))
-                newPassword.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedTextDark))
-                confirmPasswordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmphDark))
-                confirmPassword.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedTextDark))
+                currentPasswordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark))
+                currentPassword.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
+                newPasswordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark))
+                newPassword.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
+                confirmPasswordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmphDark))
+                confirmPassword.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
                 currentPassword.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#9cb9d3"))
                 newPassword.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#9cb9d3"))
                 confirmPassword.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#9cb9d3"))
-                cardHolder.setCardBackgroundColor(ContextCompat.getColor(App.applicationContext(), R.color.buttonBackgroundDark))
+                cardHolder.setCardBackgroundColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.buttonBackgroundDark))
                 updateBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#383838"))
-                updateBtn.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedTextDark))
+                updateBtn.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedTextDark))
             }else{
-                currentPasswordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmph))
-                currentPassword.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedText))
-                newPasswordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmph))
-                newPassword.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedText))
-                confirmPasswordLabel.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedEmph))
-                confirmPassword.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedText))
+                currentPasswordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmph))
+                currentPassword.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedText))
+                newPasswordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmph))
+                newPassword.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedText))
+                confirmPasswordLabel.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedEmph))
+                confirmPassword.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedText))
                 currentPassword.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#121212"))
                 newPassword.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#121212"))
                 confirmPassword.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#121212"))
-                cardHolder.setCardBackgroundColor(ContextCompat.getColor(App.applicationContext(), R.color.buttonBackground))
+                cardHolder.setCardBackgroundColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.buttonBackground))
                 updateBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#e1e2e6"))
-                updateBtn.setTextColor(ContextCompat.getColor(App.applicationContext(), R.color.unquenchedText))
+                updateBtn.setTextColor(ContextCompat.getColor(MainApp.applicationContext(), R.color.unquenchedText))
             }
             updateBtn.setOnClickListener {
                 if(newPassword.text.toString() != confirmPassword.text.toString()){
